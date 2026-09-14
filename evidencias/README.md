@@ -1,6 +1,7 @@
 # Evidencias de ejecución
 
-Guarde aquí las ocho capturas obtenidas al ejecutar `requests.http` en orden:
+Guarde aquí las ocho capturas obtenidas al ejecutar en orden la colección de
+Postman `Taller2-Weill.postman_collection.json`:
 
 1. `01-post-exitoso.png`
 2. `02-get-todos.png`

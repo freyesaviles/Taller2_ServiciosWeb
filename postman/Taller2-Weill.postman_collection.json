@@ -1,0 +1,90 @@
+{
+  "info": {
+    "_postman_id": "1fb35abc-c7fb-40fb-842e-f6a0017b535d",
+    "name": "Taller 2 - Test de Weill",
+    "description": "Ocho pruebas requeridas para los endpoints REST del módulo Weill.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "resultadoId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "1 - Registrar resultado válido",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "if (pm.response.code === 201) {",
+          "    pm.collectionVariables.set('resultadoId', pm.response.json().id);",
+          "}"
+        ] }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreParticipante\": \"Ana López\",\n  \"correo\": \"ana@example.com\",\n  \"edad\": 24,\n  \"fechaAplicacion\": \"2026-09-10\",\n  \"puntuacion\": 82,\n  \"nivel\": \"ALTO\",\n  \"finalizado\": true\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{baseUrl}}/api/resultados-weill"
+      }
+    },
+    {
+      "name": "2 - Listar resultados",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/resultados-weill" }
+    },
+    {
+      "name": "3 - Buscar resultado por ID",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/resultados-weill/{{resultadoId}}" }
+    },
+    {
+      "name": "4 - Actualizar resultado",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreParticipante\": \"Ana López Martínez\",\n  \"correo\": \"ana.martinez@example.com\",\n  \"edad\": 25,\n  \"fechaAplicacion\": \"2026-09-11\",\n  \"puntuacion\": 88,\n  \"nivel\": \"ALTO\",\n  \"finalizado\": true\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{baseUrl}}/api/resultados-weill/{{resultadoId}}"
+      }
+    },
+    {
+      "name": "5 - Validar nombre y edad",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreParticipante\": \"\",\n  \"correo\": \"persona@example.com\",\n  \"edad\": 3,\n  \"fechaAplicacion\": \"2026-09-10\",\n  \"puntuacion\": 70,\n  \"nivel\": \"PROMEDIO\",\n  \"finalizado\": true\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{baseUrl}}/api/resultados-weill"
+      }
+    },
+    {
+      "name": "6 - Validar correo y fecha futura",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreParticipante\": \"Luis Pérez\",\n  \"correo\": \"correo-invalido\",\n  \"edad\": 30,\n  \"fechaAplicacion\": \"2099-01-01\",\n  \"puntuacion\": 60,\n  \"nivel\": \"PROMEDIO\",\n  \"finalizado\": false\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{baseUrl}}/api/resultados-weill"
+      }
+    },
+    {
+      "name": "7 - Buscar ID inexistente",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/resultados-weill/999999" }
+    },
+    {
+      "name": "8 - Eliminar resultado",
+      "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/resultados-weill/{{resultadoId}}" }
+    }
+  ]
+}
