@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:8080
+
+### 1. POST exitoso — 201 Created
+POST {{baseUrl}}/api/resultados-weill
+Content-Type: application/json
+
+{
+  "nombreParticipante": "Ana López",
+  "correo": "ana@example.com",
+  "edad": 24,
+  "fechaAplicacion": "2026-09-10",
+  "puntuacion": 82,
+  "nivel": "ALTO",
+  "finalizado": true
+}
+
+> {% client.global.set("resultadoId", response.body.id); %}
+
+### 2. GET de todos — 200 OK
+GET {{baseUrl}}/api/resultados-weill
+
+### 3. GET por identificador — 200 OK
+GET {{baseUrl}}/api/resultados-weill/{{resultadoId}}
+
+### 4. PUT exitoso — 200 OK
+PUT {{baseUrl}}/api/resultados-weill/{{resultadoId}}
+Content-Type: application/json
+
+{
+  "nombreParticipante": "Ana López Martínez",
+  "correo": "ana.martinez@example.com",
+  "edad": 25,
+  "fechaAplicacion": "2026-09-11",
+  "puntuacion": 88,
+  "nivel": "ALTO",
+  "finalizado": true
+}
+
+### 5. POST inválido: nombre vacío y edad fuera de rango — 400 Bad Request
+POST {{baseUrl}}/api/resultados-weill
+Content-Type: application/json
+
+{
+  "nombreParticipante": "",
+  "correo": "persona@example.com",
+  "edad": 3,
+  "fechaAplicacion": "2026-09-10",
+  "puntuacion": 70,
+  "nivel": "PROMEDIO",
+  "finalizado": true
+}
+
+### 6. POST inválido: correo y fecha futura — 400 Bad Request
+POST {{baseUrl}}/api/resultados-weill
+Content-Type: application/json
+
+{
+  "nombreParticipante": "Luis Pérez",
+  "correo": "correo-invalido",
+  "edad": 30,
+  "fechaAplicacion": "2099-01-01",
+  "puntuacion": 60,
+  "nivel": "PROMEDIO",
+  "finalizado": false
+}
+
+### 7. GET con identificador inexistente — 404 Not Found
+GET {{baseUrl}}/api/resultados-weill/999999
+
+### 8. DELETE exitoso — 200 OK
+DELETE {{baseUrl}}/api/resultados-weill/{{resultadoId}}
