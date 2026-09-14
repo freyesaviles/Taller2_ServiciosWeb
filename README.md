@@ -4,6 +4,19 @@ API REST desarrollada con Spring Boot para administrar aplicaciones del test de
 inteligencia Weill. El proyecto sirve también como base para incorporar, en módulos
 independientes, los tests Allport y Thurstone.
 
+## Estado de los módulos
+
+| Test psicométrico | Módulo API | Pruebas automatizadas | Estado |
+|---|---|---|---|
+| Weill | `weill` | `ResultadoWeillControllerTests` | Implementado |
+| Allport | `allport` | Se agregarán con el módulo | En espera |
+| Thurstone | `thurstone` | Se agregarán con el módulo | En espera |
+
+Cada test psicométrico tendrá sus propios DTO, servicio, controlador, endpoints y
+pruebas automatizadas. Por ahora solamente Weill está implementado; Allport y
+Thurstone quedan expresamente pendientes para que los integrantes responsables
+los desarrollen sobre esta misma base.
+
 ## Entidad seleccionada
 
 `ResultadoWeill` representa la aplicación del test a una persona. Contiene:
@@ -42,6 +55,24 @@ automatizadas:
 ```bash
 ./mvnw test
 ```
+
+### Pruebas automatizadas actuales
+
+`ResultadoWeillControllerTests` contiene las ocho pruebas actuales del módulo
+Weill:
+
+1. Listar todos los resultados correctamente.
+2. Buscar un resultado existente por identificador.
+3. Registrar un resultado válido.
+4. Actualizar un resultado existente.
+5. Eliminar un resultado existente.
+6. Rechazar un nombre vacío y una edad fuera del rango permitido.
+7. Rechazar una fecha de aplicación futura.
+8. Responder `404 Not Found` ante un identificador inexistente.
+
+Cuando se implementen Allport y Thurstone, cada módulo deberá incorporar una clase
+de pruebas equivalente para verificar sus cinco endpoints, sus validaciones y el
+manejo de identificadores inexistentes. Esas pruebas todavía están en espera.
 
 ## Endpoints
 
